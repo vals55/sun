@@ -103,6 +103,7 @@ class sun():
         self.transit = sun.fromJulian(Jnoon)
         # Jnadir = Jnoon - 0.5
         # self.solarNadir = sun.fromJulian(Jnadir)
+
         # Angles
         #  -0.833 sunrise / sunset according refraction (size of sun disk - 31'59")
         #  -0.3   sunrise end / sunset start
@@ -129,7 +130,6 @@ class sun():
         self.goldenstart = sun.fromJulian(Jrise)
         self.goldenend = sun.fromJulian(Jset)
 
-# This log file needs to be manually cleared as appropriate.
 logFileName = '/var/log/sun.log'
 motion = '/etc/init.d/motion'
 action = 'restart'
