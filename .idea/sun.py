@@ -104,7 +104,7 @@ class sun():
         # Jnadir = Jnoon - 0.5
         # self.solarNadir = sun.fromJulian(Jnadir)
 
-        # Angles
+        # Angles for calculate events
         #  -0.833 sunrise / sunset according refraction (size of sun disk - 31'59")
         #  -0.3   sunrise end / sunset start
         #  -6     dawn / dusk
