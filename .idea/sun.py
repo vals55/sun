@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+#(c) 2020, Valentin Shokurov
+#Sun is a script to run something on daytime events.
+#Ported from suncalc https://github.com/mourner/suncalc
 
 import math
 import time
