@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #(c) 2020, Valentin Shokurov
 #Sun is a script to run something on daytime events.
-#Ported from suncalc https://github.com/mourner/suncalc
+#Class ported from suncalc https://github.com/mourner/suncalc
 
 import math
 import time
@@ -72,12 +72,7 @@ class sun():
         return sun.J2000 + ds + 0.0053 * math.sin(M) - 0.0069 * math.sin(2 * L)
 
     def hourAngle(h, phi, d):
-        try:
-            ret = math.acos((math.sin(h) - math.sin(phi) * math.sin(d)) / (math.cos(phi) * math.cos(d)))
-            return ret
-        except ValueError as e:
-            print(h, phi, d)
-            print(e)
+        return math.acos((math.sin(h) - math.sin(phi) * math.sin(d)) / (math.cos(phi) * math.cos(d)))
 
     def observerAngle(height):
         return -2.076 * math.sqrt(height) / 60
@@ -104,8 +99,8 @@ class sun():
 
         Jnoon = sun.solarTransitJ(ds, M, L)
         self.transit = sun.fromJulian(Jnoon)
-        # Jnadir = Jnoon - 0.5
-        # self.solarNadir = sun.fromJulian(Jnadir)
+        Jnadir = Jnoon - 0.5
+        self.nadir = sun.fromJulian(Jnadir)
 
         # Angles for calculate events
         #  -0.833 sunrise / sunset according refraction (size of sun disk - 31'59")
