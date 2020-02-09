@@ -128,33 +128,42 @@ class sun():
         self.goldenstart = sun.fromJulian(Jrise)
         self.goldenend = sun.fromJulian(Jset)
 
+class flags():
+    sunrise_done = False
+    goldenstart_done = False
+    transit_done = False
+    goldenend_done = False
+    sunset_done = False
+
+    def __init__(self):
+        self.sunrise_done = False
+        self.goldenstart_done = False
+        self.transit_done = False
+        self.goldenend_done = False
+        self.sunset_done = False
+
+    def reset(self):
+        self.sunrise_done = False
+        self.goldenstart_done = False
+        self.transit_done = False
+        self.goldenend_done = False
+        self.sunset_done = False
+
 logFileName = '/var/log/sun.log'
 motion = '/etc/init.d/motion'
 action = 'restart'
 
-sunrise_done = False
-transit_done = False
-sunset_done = False
-goldenstart_done = False
-goldenend_done = False
 
 def logNote(s):
     logFile = open(logFileName,'a')
     logFile.write('{} {}\n'.format(datetime.datetime.now().strftime('%b %d %H:%M:%S'), s))
     logFile.close()
 
-def reset():
-    sunrise_done = False
-    transit_done = False
-    sunset_done = False
-    goldenstart_done = False
-    goldenend_done = False
-
 s = sun(55.8269706, 37.5247134, 180)
 logNote('Calculations are for {:8.5f} N latitude and {:9.5f} E longitude'.format(s.latitude, s.longitude))
 currentDateTime = datetime.datetime.now()
 s.calculate(currentDateTime)
-reset()
+d = flags()
 
 logNote('dawn        = {}'.format(s.dawn))
 logNote('sunrise     = {}'.format(s.sunrise))
@@ -171,30 +180,30 @@ while True:
     if currentDateTime > s.dusk:
         tomorrowDateTime = currentDateTime + timedelta(days = 1)
         s.calculate(tomorrowDateTime)
-        reset()
+        d.reset()
 
-    if currentDateTime > s.sunrise and not sunrise_done:
-        sunrise_done = True
+    if currentDateTime > s.sunrise and not d.sunrise_done:
+        d.sunrise_done = True
         logNote('Sunrise has come {}'.format(s.sunrise))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.goldenstart and not goldenstart_done:
-        goldenstart_done = True
+    if currentDateTime > s.goldenstart and not d.goldenstart_done:
+        d.goldenstart_done = True
         logNote('Morning golden hour has come {}'.format(s.goldenstart))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.transit and not transit_done:
-        transit_done = True
+    if currentDateTime > s.transit and not d.transit_done:
+        d.transit_done = True
         logNote('Transit has come {}'.format(s.transit))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.goldenend and not goldenend_done:
-        goldenend_done = True
+    if currentDateTime > s.goldenend and not d.goldenend_done:
+        d.goldenend_done = True
         logNote('Evening golden hour has come {}'.format(s.goldenend))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.sunset and not sunset_done:
-        sunset_done = True
+    if currentDateTime > s.sunset and not d.sunset_done:
+        d.sunset_done = True
         logNote('Sunset has come {}'.format(s.sunset))
         p = subprocess.Popen([motion, action])
 
