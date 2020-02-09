@@ -163,7 +163,7 @@ s = sun(55.8269706, 37.5247134, 180)
 logNote('Calculations are for {:8.5f} N latitude and {:9.5f} E longitude'.format(s.latitude, s.longitude))
 currentDateTime = datetime.datetime.now()
 s.calculate(currentDateTime)
-d = flags()
+f = flags()
 
 logNote('dawn        = {}'.format(s.dawn))
 logNote('sunrise     = {}'.format(s.sunrise))
@@ -180,30 +180,30 @@ while True:
     if currentDateTime > s.dusk:
         tomorrowDateTime = currentDateTime + timedelta(days = 1)
         s.calculate(tomorrowDateTime)
-        d.reset()
+        f.reset()
 
-    if currentDateTime > s.sunrise and not d.sunrise_done:
-        d.sunrise_done = True
+    if currentDateTime > s.sunrise and not f.sunrise_done:
+        f.sunrise_done = True
         logNote('Sunrise has come {}'.format(s.sunrise))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.goldenstart and not d.goldenstart_done:
-        d.goldenstart_done = True
+    if currentDateTime > s.goldenstart and not f.goldenstart_done:
+        f.goldenstart_done = True
         logNote('Morning golden hour has come {}'.format(s.goldenstart))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.transit and not d.transit_done:
-        d.transit_done = True
+    if currentDateTime > s.transit and not f.transit_done:
+        f.transit_done = True
         logNote('Transit has come {}'.format(s.transit))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.goldenend and not d.goldenend_done:
-        d.goldenend_done = True
+    if currentDateTime > s.goldenend and not f.goldenend_done:
+        f.goldenend_done = True
         logNote('Evening golden hour has come {}'.format(s.goldenend))
         p = subprocess.Popen([motion, action])
 
-    if currentDateTime > s.sunset and not d.sunset_done:
-        d.sunset_done = True
+    if currentDateTime > s.sunset and not f.sunset_done:
+        f.sunset_done = True
         logNote('Sunset has come {}'.format(s.sunset))
         p = subprocess.Popen([motion, action])
 
