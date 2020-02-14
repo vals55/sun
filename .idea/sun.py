@@ -160,7 +160,7 @@ def logNote(s):
     logFile.close()
 
 s = sun(55.8269706, 37.5247134, 180)
-logNote('Calculations are for {:8.5f} N latitude and {:9.5f} E longitude'.format(s.latitude, s.longitude))
+logNote('Calculations are for {:8.5f}N latitude and {:9.5f}E longitude'.format(s.latitude, s.longitude))
 currentDateTime = datetime.datetime.now()
 s.calculate(currentDateTime)
 f = flags()
